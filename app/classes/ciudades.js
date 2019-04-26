@@ -14,18 +14,8 @@ class Ciudad{
 		this.long = long
 		this.temperatura = ''
 		this.hora = ''
-	}
-
-	obtener_hora(unix_timestamp){
-		var fecha = new Date(unix_timestamp * 1000);
-		var horas = fecha.getHours();
-		var minutos = "0" + fecha.getMinutes();
-		var segundos = "0" + fecha.getSeconds();
-
-		console.log(uni)
-		console.log(fecha)
-		console.log(horas + ':' + minutos.substr(-2) + ':' + segundos.substr(-2))
-		return horas + ':' + minutos.substr(-2) + ':' + segundos.substr(-2);
+		this.zona = ''
+		this.resumen = ''
 	}
 
 	async obtener_informacion(){
@@ -37,12 +27,13 @@ class Ciudad{
 			}
 			
 			//de lo contrario se hace la petición
-			let data = await axios.get(`https://api.darksky.net/forecast/${process.env.KEY_API}/${this.lat},${this.long}?lang=es&exten=hourly&units=ca`)
+			let data = await axios.get(`https://api.darksky.net/forecast/${process.env.KEY_API}/${this.lat},${this.long}?lang=es&units=auto&exclude=[hourly,minutely,hourly,daily,alerts,flags]`)
 			
 			//actualizamos los atributos de hora y temperatura de la ciudad
 			this.hora = data.data.currently.time
-
 			this.temperatura = data.data.currently.temperature
+			this.zona = data.data.timezone
+			this.resumen = data.data.currently.summary
 
 		}catch(err){
 			let date = new Date()
@@ -71,7 +62,7 @@ class Ciudades{
 		let json = {}
 
 		//creando objeto
-		this.lista.map(ciudad => json[ciudad.nombre] = `${ciudad.lat},${ciudad.long},${ciudad.hora},${ciudad.temperatura}`)
+		this.lista.map(ciudad => json[ciudad.nombre] = `${ciudad.lat},${ciudad.long}`)
 
 		//insertando el hash
 		db.hmset('ciudades',json,function(err,reply){
