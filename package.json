@@ -1,0 +1,23 @@
+{
+  "name": "backend-app-ripley",
+  "version": "1.0.0",
+  "description": "Aplicacion para obtener el clima de ciertas ciudades - desafio ripley",
+  "main": "server.js",
+  "scripts": {
+    "start" : "node app/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "redis",
+    "websocket"
+  ],
+  "author": "Carlos Escorche",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "redis": "^2.8.0",
+    "socket.io": "^2.2.0"
+  }
+}
