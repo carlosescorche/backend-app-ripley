@@ -62,7 +62,7 @@ class Ciudades{
 		let json = {}
 
 		//creando objeto
-		this.lista.map(ciudad => json[ciudad.nombre] = `${ciudad.lat},${ciudad.long}`)
+		this.lista.map(ciudad => json[ciudad.nombre] = `${ciudad.lat},${ciudad.long},${ciudad.resumen},${ciudad.zona},${ciudad.temperatura},${ciudad.hora}`)
 
 		//insertando el hash
 		db.hmset('ciudades',json,function(err,reply){
